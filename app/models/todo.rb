@@ -28,10 +28,10 @@ class Todo < ActiveRecord::Base
       base.has_many :all_todos, :class_name => 'Todo', :foreign_key => "creator_id"
       
       base.has_many :unexpired_todos, :class_name => 'Todo', :foreign_key => "creator_id",
-        :conditions => "todos.completed is not true and (todos.date is null or todos.date > #{Time.now.strftime("%Y%m%d").to_i})"
+        :conditions => "todos.completed is not true and (todos.date is null or todos.date >= #{Time.now.strftime("%Y%m%d").to_i})"
         
       base.has_many :expired_todos, :class_name => 'Todo', :foreign_key => "creator_id",
-        :conditions => "todos.completed is not true and todos.date <= #{Time.now.strftime("%Y%m%d").to_i}"
+        :conditions => "todos.completed is not true and todos.date < #{Time.now.strftime("%Y%m%d").to_i}"
         
       base.has_many :completed_todos, :class_name => 'Todo', :foreign_key => "creator_id",
         :conditions => "todos.completed is true"
